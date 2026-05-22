@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+
+
+.container {
+  width: 100%;
+  max-width: 38rem;
+  background-color: rgb(87, 164, 253);
+  margin: 0 auto;
+  border-top: black solid 3px;
+  border-left: black solid 1px;
+  border-bottom: black solid 1px;
+  border-right: none;
+}
+
+h1 {
+  font-size: 2.8rem;
+  padding: .4rem;
+
+}
+
+h1,
+h2 {
+
+  text-align: center;
+
+}
+
+h2 {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  font-weight: 200;
+  margin: 0 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: .5rem 2rem;
+}
+
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.3rem 0;
+  margin: 1.8rem auto;
+  font-size: 1.1rem;
+
+}
+
+.inputs input {
+  width: 30%;
+  margin: auto;
+  padding: 1.5rem 2.5rem;
+  font-size: 1.1rem;
+ color: black;
+  border-radius: .3rem;
+  border: none;
+
+}
+
+.label-input:not(.checkbox) {
+  display: flex;
+  width: 100%;
+  border: white solid 1px;
+  padding: 1rem 0;
+
+}
+
+.label-input {
+  align-items: flex-start;
+
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1.3rem;
+  text-transform: capitalize;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+.checkbox {
+  display: flex;
+}
+
+span,
+.checkbox-label {
+  font-size: .9rem;
+  text-transform: none;
+  letter-spacing: normal;
+  
+
+}
+
+
+
+input[type="submit"] {
+  display: block;
+  background-color: #00ffea;
+  font-size: 1.1rem;
+  font-weight: 400;
+  width: 100%;
+  padding: 1.2rem;
+  margin: auto;
+  border: none;
+}
