@@ -1,4 +1,5 @@
 "use strict";
+  const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const createDiv = (className) => {
   const divInput = document.createElement("div");
   divInput.className = className;
@@ -50,6 +51,11 @@ const createLabel = ({ className, htmlFor, spanText, labelText }) => {
 
   return label;
 };
+const email = createInput({
+  className: "form-input",
+  type: "email",
+  placeholder: "Email address",
+});
 const mainContainer = document.querySelector(".container");
 const formLoad = () => {
   const h1 = document.createElement("h1");
@@ -62,7 +68,7 @@ const formLoad = () => {
     createInput({ type: "text", placeholder: "First name" }),
     createInput({ type: "text", placeholder: "Last name" }),
     createInput({ type: "text", placeholder: "Display name" }),
-    createInput({ type: "email", placeholder: "Email address" }),
+    email,
     createInput({ type: "password", placeholder: "Password" }),
     createInput({ type: "password", placeholder: "Password conformation" }),
   );
@@ -100,13 +106,37 @@ const formLoad = () => {
             time`,
     }),
   );
+  const submit = createInput({ type: "submit", value: "Create account" });
   mainContainer.append(h1, h2, form);
-  form.append(
-    inputDiv1,
-    inputDiv2,
-    inputDiv3,
-    inputDiv4,
-    createInput({ type: "submit", value: "Create account" }),
-  );
+  form.append(inputDiv1, inputDiv2, inputDiv3, inputDiv4, submit);
 };
 formLoad();
+const submitElem = document.querySelector('input[type="submit"]');
+const formInput = document.querySelector(".form-input");
+function errorMessage(message) {
+  const errorDiv = document.createElement("div");
+  errorDiv.className = "error";
+  email.after(errorDiv);
+  errorDiv.textContent = message;
+}
+
+const emailValidation = (e) => {
+e.preventDefault()
+const prevError = document.querySelector(".error");
+if(prevError){
+prevError.remove()
+}
+  const emailInputValue = formInput.value.trim();
+
+  if (emailInputValue === "") {
+    return errorMessage("This field shouldn't be empty");
+  }
+  if (emailInputValue.length < 11 || emailInputValue.length > 30) {
+    return errorMessage("The length should be between 11 and 30");
+  }
+  if(!checkEmail.test(emailInputValue)){
+    return errorMessage("wrong email")
+  }
+};
+
+submitElem.addEventListener("click", emailValidation);

@@ -112,3 +112,11 @@ input[type="submit"] {
   margin: auto;
   border: none;
 }
+.error{
+  font-size: 1.5rem;
+  padding: .5rem;
+  letter-spacing: 5px;
+width: 95%;
+  border: red 3px solid;
+  color: red;
+}
