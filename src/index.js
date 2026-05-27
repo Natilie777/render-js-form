@@ -1,6 +1,6 @@
 "use strict";
   const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const createDiv = (className) => {
+  const createDiv = (className) => {
   const divInput = document.createElement("div");
   divInput.className = className;
   return divInput;
@@ -10,6 +10,7 @@ const createSpan = (txt) => {
   span.textContent = txt;
   return span;
 };
+
 const createInput = ({ className, type, name, placeholder, id, value }) => {
   const inputElem = document.createElement("input");
   if (className) {
@@ -56,6 +57,8 @@ const email = createInput({
   type: "email",
   placeholder: "Email address",
 });
+const createPassword =createInput({className:"password", type: "password", placeholder: "Password" })
+const confirmPassword =createInput({ className:"passwordConfirm", type: "password", placeholder: "Password conformation" })
 const mainContainer = document.querySelector(".container");
 const formLoad = () => {
   const h1 = document.createElement("h1");
@@ -69,8 +72,8 @@ const formLoad = () => {
     createInput({ type: "text", placeholder: "Last name" }),
     createInput({ type: "text", placeholder: "Display name" }),
     email,
-    createInput({ type: "password", placeholder: "Password" }),
-    createInput({ type: "password", placeholder: "Password conformation" }),
+   createPassword, 
+      confirmPassword 
   );
 
   const inputDiv2 = createDiv("label-input");
@@ -113,30 +116,51 @@ const formLoad = () => {
 formLoad();
 const submitElem = document.querySelector('input[type="submit"]');
 const formInput = document.querySelector(".form-input");
-function errorMessage(message) {
+function errorMessage(message,element,errorClass) {
   const errorDiv = document.createElement("div");
-  errorDiv.className = "error";
-  email.after(errorDiv);
+  errorDiv.className = errorClass;
+ element.after(errorDiv);
   errorDiv.textContent = message;
 }
 
+
+const removeError = (error) => {
+  const prevError = document.querySelector(error);
+  if (prevError) {
+    prevError.remove();
+  }
+};
 const emailValidation = (e) => {
 e.preventDefault()
-const prevError = document.querySelector(".error");
-if(prevError){
-prevError.remove()
-}
+removeError(".error");
   const emailInputValue = formInput.value.trim();
 
   if (emailInputValue === "") {
-    return errorMessage("This field shouldn't be empty");
+    return errorMessage("This field shouldn't be empty", email,"error");
   }
   if (emailInputValue.length < 11 || emailInputValue.length > 30) {
-    return errorMessage("The length should be between 11 and 30");
+    return errorMessage(
+      "The length should be between 11 and 30",
+      email,
+      "error",
+    );
   }
   if(!checkEmail.test(emailInputValue)){
-    return errorMessage("wrong email")
+    return errorMessage("wrong email", email, "error");
   }
 };
-
+const passwordInput = document.querySelector(".password")
+const passwordToConfirm =  document.querySelector(".passwordConfirm")
 submitElem.addEventListener("click", emailValidation);
+const passwordValidation =()=>{
+removeError(".passwordError");
+
+  if (passwordInput.value.trim() !== passwordToConfirm.value.trim()) {
+    return errorMessage(
+      "Two passwords should be the same ",
+      passwordToConfirm,
+      "passwordError",
+    );
+  }
+}
+passwordToConfirm.addEventListener("blur",passwordValidation)
