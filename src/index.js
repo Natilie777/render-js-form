@@ -114,7 +114,7 @@ const formLoad = () => {
   form.append(inputDiv1, inputDiv2, inputDiv3, inputDiv4, submit);
 };
 formLoad();
-const submitElem = document.querySelector('input[type="submit"]');
+
 const formInput = document.querySelector(".form-input");
 function errorMessage(message,element,errorClass) {
   const errorDiv = document.createElement("div");
@@ -130,14 +130,18 @@ const removeError = (error) => {
     prevError.remove();
   }
 };
-const emailValidation = (e) => {
-e.preventDefault()
+
+const emailValidation = () => {
+
 removeError(".error");
   const emailInputValue = formInput.value.trim();
 
   if (emailInputValue === "") {
     return errorMessage("This field shouldn't be empty", email,"error");
   }
+   if (!checkEmail.test(emailInputValue)) {
+     return errorMessage("wrong email", email, "error");
+   }
   if (emailInputValue.length < 11 || emailInputValue.length > 30) {
     return errorMessage(
       "The length should be between 11 and 30",
@@ -145,13 +149,11 @@ removeError(".error");
       "error",
     );
   }
-  if(!checkEmail.test(emailInputValue)){
-    return errorMessage("wrong email", email, "error");
-  }
+ 
 };
 const passwordInput = document.querySelector(".password")
 const passwordToConfirm =  document.querySelector(".passwordConfirm")
-submitElem.addEventListener("click", emailValidation);
+formInput.addEventListener("blur", emailValidation);
 const passwordValidation =()=>{
 removeError(".passwordError");
 
