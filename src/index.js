@@ -1,4 +1,9 @@
 "use strict";
+class Person{
+  constructor(data){
+    Object.assign(this,data)
+  }
+}
   const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const createDiv = (className) => {
   const divInput = document.createElement("div");
@@ -55,7 +60,9 @@ const createLabel = ({ className, htmlFor, spanText, labelText }) => {
 const email = createInput({
   className: "form-input",
   type: "email",
+  name:"email",
   placeholder: "Email address",
+  
 });
 const createPassword =createInput({className:"password", type: "password", placeholder: "Password" })
 const confirmPassword =createInput({ className:"passwordConfirm", type: "password", placeholder: "Password conformation" })
@@ -68,18 +75,22 @@ const formLoad = () => {
   const form = document.createElement("form");
   const inputDiv1 = createDiv("inputs");
   inputDiv1.append(
-    createInput({ type: "text", placeholder: "First name" }),
-    createInput({ type: "text", placeholder: "Last name" }),
-    createInput({ type: "text", placeholder: "Display name" }),
+    createInput({ type: "text", name: "firstName", placeholder: "First name" }),
+    createInput({ type: "text", name: "lastName", placeholder: "Last name" }),
+    createInput({
+      type: "text",
+      name: "nickName",
+      placeholder: "Nick name",
+    }),
     email,
-   createPassword, 
-      confirmPassword 
+    createPassword,
+    confirmPassword,
   );
 
   const inputDiv2 = createDiv("label-input");
 
   inputDiv2.append(
-    createInput({ type: "radio", id: "buyer", name: "buyer-seller" }),
+    createInput({ type: "radio", id: "buyer", name: "buyer" }),
     createLabel({
       className: "label",
       htmlFor: "buyer",
@@ -90,7 +101,7 @@ const formLoad = () => {
   );
   const inputDiv3 = createDiv("label-input");
   inputDiv3.append(
-    createInput({ type: "radio", id: "seller", name: "buyer-seller" }),
+    createInput({ type: "radio", id: "seller", name: "seller" }),
     createLabel({
       className: "label",
       htmlFor: "seller",
@@ -166,3 +177,25 @@ removeError(".passwordError");
   }
 }
 passwordToConfirm.addEventListener("blur",passwordValidation)
+const form = document.querySelector("form");
+
+form.addEventListener("submit",formSubmit)
+
+function formSubmit(e){
+e.preventDefault()
+const getInputs = form.querySelectorAll("input");
+const data ={}
+for(let input of getInputs){
+    if(input.type==="password"|| input.type==="submit"){
+    continue
+  }
+ 
+else{
+  data[input.name]=input.value
+}
+}
+const newPerson = new Person(data)
+console.log(newPerson)
+const newPersonStr = JSON.stringify(newPerson)
+localStorage.setItem(newPerson.lastName,newPersonStr)
+}
